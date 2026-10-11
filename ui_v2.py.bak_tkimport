@@ -1,0 +1,260 @@
+"""
+本代码由[Tkinter布局助手]生成
+官网:https://www.pytk.net
+QQ交流群:905019785
+在线反馈:https://support.qq.com/product/618914
+"""
+import random
+from tkinter import *
+from tkinter.ttk import *
+from ttkbootstrap import *
+from pytkUI.widgets import *
+
+from tkinter import filedialog
+import time
+from inspect import getfullargspec as getargspec, signature  # getargspec 在 Python 3.11 被移除
+import re
+import chardet
+
+class WinGUI(Window):
+    def __init__(self):
+        super().__init__(themename="cosmo", hdpi=False)
+        self.__win()
+        self.tk_label_title = self.__tk_label_title(self)
+
+        self.tk_text_show_filepath = self.__tk_text_show_filepath(self)
+        self.tk_text_bgcolor_demo = self.__tk_text_bgcolor_demo(self)
+        self.tk_text_Result = self.__tk_text_Result(self)
+
+        self.tk_input_keyword1 = self.__tk_input_keyword1(self)
+        self.tk_input_keyword2 = self.__tk_input_keyword2(self)
+        self.tk_input_keyword3 = self.__tk_input_keyword3(self)
+        self.tk_input_keyword4 = self.__tk_input_keyword4(self)
+        self.tk_button_search1 = self.__tk_button_search1(self)
+        self.tk_button_search2 = self.__tk_button_search2(self)
+        self.tk_button_search3 = self.__tk_button_search3(self)
+        self.tk_button_search4 = self.__tk_button_search4(self)
+
+        self.tk_button_upload_file = self.__tk_button_upload_file(self)
+
+        self.ext_icon_battery = self.__ext_icon_battery(self)
+        self.ext_icon_qq = self.__ext_icon_qq(self)
+        self.ext_icon_wifi = self.__ext_icon_wifi(self)
+        self.ext_icon_volume = self.__ext_icon_volume(self)
+        self.ext_icon_rss = self.__ext_icon_rss(self)
+        self.tk_text_time = self.__tk_text_time(self)
+        self.ext_icon_earphone = self.__ext_icon_earphone(self)
+        self.ext_icon_return = self.__ext_icon_return(self)
+        self.ext_icon_chat = self.__ext_icon_chat(self)
+        self.ext_icon_switch = self.__ext_icon_switch(self)
+
+        self.update_time()
+
+    def __win(self):
+        self.title("小三月の工具箱")
+        # 设置窗口大小、居中
+        width = 1000
+        height = 500
+        screenwidth = self.winfo_screenwidth()
+        screenheight = self.winfo_screenheight()
+        geometry = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2, (screenheight - height) / 2)
+        self.geometry(geometry)
+        
+        self.resizable(width=False, height=False)
+        
+    def scrollbar_autohide(self,vbar, hbar, widget):
+        """自动隐藏滚动条"""
+        def show():
+            if vbar: vbar.lift(widget)
+            if hbar: hbar.lift(widget)
+        def hide():
+            if vbar: vbar.lower(widget)
+            if hbar: hbar.lower(widget)
+        hide()
+        widget.bind("<Enter>", lambda e: show())
+        if vbar: vbar.bind("<Enter>", lambda e: show())
+        if vbar: vbar.bind("<Leave>", lambda e: hide())
+        if hbar: hbar.bind("<Enter>", lambda e: show())
+        if hbar: hbar.bind("<Leave>", lambda e: hide())
+        widget.bind("<Leave>", lambda e: hide())
+    
+    def v_scrollbar(self,vbar, widget, x, y, w, h, pw, ph):
+        widget.configure(yscrollcommand=vbar.set)
+        vbar.config(command=widget.yview)
+        vbar.place(relx=(w + x) / pw, rely=y / ph, relheight=h / ph, anchor='ne')
+    def h_scrollbar(self,hbar, widget, x, y, w, h, pw, ph):
+        widget.configure(xscrollcommand=hbar.set)
+        hbar.config(command=widget.xview)
+        hbar.place(relx=x / pw, rely=(y + h) / ph, relwidth=w / pw, anchor='sw')
+    def create_bar(self,master, widget,is_vbar,is_hbar, x, y, w, h, pw, ph):
+        vbar, hbar = None, None
+        if is_vbar:
+            vbar = Scrollbar(master)
+            self.v_scrollbar(vbar, widget, x, y, w, h, pw, ph)
+        if is_hbar:
+            hbar = Scrollbar(master, orient="horizontal")
+            self.h_scrollbar(hbar, widget, x, y, w, h, pw, ph)
+        self.scrollbar_autohide(vbar, hbar, widget)
+    def new_style(self,widget):
+        ctl = widget.cget('style')
+        ctl = "".join(random.sample('0123456789',5)) + "." + ctl
+        widget.configure(style=ctl)
+        return ctl
+
+    # 主功能
+    def __tk_label_title(self,parent):
+        label = Label(parent, text="  只学习不玩耍，聪明三月也变傻", anchor="w", bootstyle="warning inverse", background='blue')
+        label.place(x=0, y=0, width=1000, height=50)
+        return label
+    def __tk_text_Result(self, parent):
+        text = Text(parent, wrap=tk.WORD, insertbackground="white", font=("Helvetica", 12), background='black')
+        text.place(x=50, y=190, width=900, height=250)
+        # text.place(x=60, y=320, width=700, height=134)
+        self.create_bar(parent, text, True, True, 50, 180, 900, 250, 1000, 500)
+        return text
+    def __tk_input_keyword1(self,parent):
+        ipt = Entry(parent, bootstyle="default")
+        ipt.place(x=50, y=150, width=120, height=30)
+        return ipt
+    def __tk_input_keyword2(self,parent):
+        ipt = Entry(parent, bootstyle="default")
+        ipt.place(x=290, y=150, width=120, height=30)
+        return ipt
+    def __tk_input_keyword3(self,parent):
+        ipt = Entry(parent, bootstyle="default")
+        ipt.place(x=530, y=150, width=120, height=30)
+        return ipt
+    def __tk_input_keyword4(self,parent):
+        ipt = Entry(parent, bootstyle="default")
+        ipt.place(x=770, y=150, width=120, height=30)
+        return ipt
+    def __tk_button_search1(self,parent):
+        btn = Button(parent, text="搜索", takefocus=False, bootstyle="default")
+        btn.place(x=180, y=150, width=50, height=30)
+        return btn
+    def __tk_button_search2(self,parent):
+        btn = Button(parent, text="搜索", takefocus=False,bootstyle="default")
+        btn.place(x=420, y=150, width=50, height=30)
+        return btn
+    def __tk_button_search3(self,parent):
+        btn = Button(parent, text="搜索", takefocus=False,bootstyle="default")
+        btn.place(x=660, y=150, width=50, height=30)
+        return btn
+    def __tk_button_search4(self,parent):
+        btn = Button(parent, text="搜索", takefocus=False,bootstyle="default")
+        btn.place(x=900, y=150, width=50, height=30)
+        return btn
+
+    # 左上
+    def __tk_text_time(self,parent):
+        text = tk.Label(parent, font=("Helvetica", 15), fg="black", bg="#f0f0f0")
+        text.place(x=0, y=62, width=90, height=25)
+        return text
+    def __ext_icon_qq(self,parent):
+        icon = Icon(parent,icon_name="tencent-qq", size=27, color="#000000")
+        icon.place(x=90, y=60, width=30, height=30)
+        return icon
+    def __ext_icon_chat(self,parent):
+        icon = Icon(parent,icon_name="chat-dots", size=27, color="#000000")
+        icon.place(x=125, y=60, width=30, height=30)
+        return icon
+    def __ext_icon_switch(self,parent):
+        icon = Icon(parent,icon_name="nintendo-switch", size=27, color="#000000")
+        icon.place(x=165, y=60, width=30, height=30)
+        return icon
+
+    # 右上
+    def __ext_icon_battery(self,parent):
+        icon = Icon(parent,icon_name="battery-full", size=27, color="#000000")
+        icon.place(x=960, y=60, width=30, height=30)
+        return icon
+    def __ext_icon_wifi(self,parent):
+        icon = Icon(parent,icon_name="wifi", size=27, color="#000000")
+        icon.place(x=890, y=60, width=30, height=30)
+        return icon
+    def __ext_icon_volume(self,parent):
+        icon = Icon(parent,icon_name="volume-up", size=27, color="#000000")
+        icon.place(x=855, y=60, width=30, height=30)
+        return icon
+    def __ext_icon_rss(self,parent):
+        icon = Icon(parent,icon_name="rss-fill", size=27, color="#000000")
+        icon.place(x=925, y=60, width=30, height=30)
+        return icon
+    def __ext_icon_earphone(self,parent):
+        icon = Icon(parent,icon_name="headphones", size=27, color="#000000")
+        icon.place(x=820, y=60, width=30, height=30)
+        return icon
+
+    # 左下
+    def __ext_icon_return(self, parent):
+        icon = Icon(parent,icon_name="arrow-left-square", size=27, color="#000000")
+        icon.place(x=0, y=470, width=30, height=30)
+        return icon
+
+
+    # 导入文件路径
+    def __tk_text_show_filepath(self, parent):
+        text = Text(parent)
+        # scrollbar = Scrollbar(parent, command=text.yview)
+        # scrollbar.place(x=60, y=183, width=400, height=30)
+        # text.config(yscrollcommand=scrollbar.set)
+        text.place(x=50, y=103, width=550, height=30)
+        self.create_bar(parent, text, True, True, 60, 103, 550, 30, 1000, 500)
+        return text
+
+    def __tk_text_bgcolor_demo(self, parent):
+        text = Text(parent,
+                      bg="black",    # 背景色设置为黑色
+                      fg="white",    # 字体颜色设置为白色
+                      insertbackground="white",  # 插入光标颜色设置为白色
+                      font=("Arial", 12))  # 设置字体和大小
+        text.place(x=0, y=0, width=200, height=200)
+        text.insert(1.0, "示例文字", 'red')
+        return text
+
+    def __tk_button_upload_file(self, parent):
+        # btn = Button(parent, text="导入", takefocus=False, bootstyle="default", command=self.upload_file)
+        btn = Button(parent, text="导入")
+        btn.place(x=625, y=103, width=50, height=30)
+        return btn
+
+    # 辅助函数
+    def update_time(self):
+        current_time = time.strftime("%H:%M", time.localtime())
+        self.tk_text_time["text"] = current_time
+        self.tk_text_time.after(1000, self.update_time)  # 每秒更新一次时间
+
+
+class Win(WinGUI):
+    def __init__(self, controller):
+        self.ctl = controller
+        super().__init__()
+        self.__event_bind()
+        self.__style_config()
+        self.ctl.init(self)
+    def __event_bind(self):
+        self.tk_input_keyword1.bind('<Return>',self.ctl.search1_1)
+        self.tk_input_keyword2.bind('<Return>',self.ctl.Search2_2)
+        self.tk_button_search2.bind('<Button-1>',self.ctl.GetResult)
+        self.tk_button_search1.bind('<Button-1>',self.ctl.SearchFromMessage)
+        self.tk_input_keyword3.bind('<Return>',self.ctl.Search3_3)
+        # self.tk_input_keyword4.bind('<Return>',self.ctl.Search4_4)
+        self.tk_button_search3.bind('<Button-1>',self.ctl.GetResult)
+        # self.tk_button_search4.bind('<Button-1>',self.ctl.GetResult)
+        self.tk_button_upload_file.bind('<Button-1>', self.ctl.upload_file)
+        self.ext_icon_return.bind('<Button-1>',self.ctl.return_menu)
+        pass
+    def __style_config(self):
+        sty = Style()
+        sty.configure(self.new_style(self.tk_label_title),font=("楷体", -25))
+        sty.configure(self.new_style(self.tk_button_search2),font=("微软雅黑", -12))
+        sty.configure(self.new_style(self.tk_button_search1),font=("微软雅黑", -12))
+        sty.configure(self.new_style(self.tk_button_search3),font=("微软雅黑", -12))
+        # sty.configure(self.new_style(self.tk_button_search4),font=("微软雅黑", -12))
+        sty.configure(self.new_style(self.tk_button_upload_file),font=("微软雅黑", -12))
+        pass
+
+
+if __name__ == "__main__":
+    win = WinGUI()
+    win.mainloop()
